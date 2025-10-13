@@ -9,7 +9,8 @@ interface LayoutProps {
 }
 
 const navItems = [
-  { icon: Home, label: "Dashboard", path: "/" },
+  { icon: Home, label: "Dashboard", path: "/Dashboard" },
+  { icon: TrendingUp, label: "Assigned Tasks", path: "/ReceiveNoti" },
   { icon: TrendingUp, label: "Tracking", path: "/tracking" },
   { icon: Plus, label: "New Proposal", path: "/tracking/motor/new" },
   { icon: Settings, label: "Setup", path: "/setup" },
@@ -29,7 +30,7 @@ export default function Layout({ children }: LayoutProps) {
             <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-sidebar-primary">
               <TrendingUp className="h-5 w-5 text-sidebar-primary-foreground" />
             </div>
-            <span className="text-lg font-semibold text-sidebar-foreground">WorkFlow Pro</span>
+            <span className="text-lg font-semibold text-sidebar-foreground">WorkFlow Tracking System</span>
           </div>
 
           {/* Navigation */}

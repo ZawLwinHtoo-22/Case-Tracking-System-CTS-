@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FileText, CheckCircle, Clock, AlertCircle, MessageSquare, MessageCircle, Paperclip, X, CalendarIcon } from "lucide-react";
+import { FileText, CheckCircle, Clock, AlertCircle, MessageSquare, Paperclip, X, CalendarIcon } from "lucide-react";
 import StatsCard from "@/components/StatsCard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -16,35 +16,35 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 const recentPolicies = [{
-  //InitiatedBy: "Ko Nyein Chan Lin",
-  proposalNo: "POL-2024-001",
-  registrationNo: "MH-01-AB-1234",
-  AssignedTo: "John Doe",
-  workflowStatus: "Survey",
+  sender: "Ko Nyein Chan Lin",
+  proposalNo: "EFI-HO/CM/PO/00001694/9-2025",
+  registrationNo: "YGN BB/8102",
+  insuredPerson: " Sweety Home Industry Co., Ltd",
+  workflowStatus: "Acknowledged",
   duration: "2 days",
   requestDate: "2024-03-15"
 }, {
-  //InitiatedBy: "Ko Nyein Chan Lin",
-  proposalNo: "POL-2024-002",
-  registrationNo: "MH-02-CD-5678",
-  AssignedTo: "Jane Smith",
-  workflowStatus: "Approval",
+  sender: "Ko Kyaw Soe Khaing",
+  proposalNo: "EFI-HO/CM/PO/00000615/9-2023",
+  registrationNo: "YGN 4D/8169",
+  insuredPerson: "U Bo Bo Zaw Chit Hlaing",
+  workflowStatus: "In Progress",
   duration: "5 days",
   requestDate: "2024-03-10"
 }, {
-  //InitiatedBy: "Ko Nyein Chan Lin",
-  proposalNo: "POL-2024-003",
-  registrationNo: "MH-03-EF-9012",
-  AssignedTo: "ABC Corp",
-  workflowStatus: "Payment",
+  sender: "Ko Thiha Soe",
+  proposalNo: "EFI-HO/EV/C-PO/0000000002/9-2025",
+  registrationNo: "NPW 9S/9296",
+  insuredPerson: "U Wai Phyo Zaw",
+  workflowStatus: "In Progress",
   duration: "3 days",
   requestDate: "2024-03-05"
 }, {
-  //InitiatedBy: "Ko Nyein Chan Lin",
-  proposalNo: "POL-2024-004",
-  registrationNo: "MH-04-GH-3456",
-  AssignedTo: "Mike Johnson",
-  workflowStatus: "Inform",
+  sender: "Ko Zaw Lwin Htoo",
+  proposalNo: "EFI-HO/CM/C-PO/00000182/9-2023",
+  registrationNo: "BGO 5R/1709",
+  insuredPerson: "U Min Si Thu",
+  workflowStatus: "Completed",
   duration: "1 day",
   requestDate: "2024-02-28"
 }];
@@ -76,7 +76,7 @@ export default function Dashboard() {
     from?: Date;
     to?: Date;
   } | undefined>(undefined);
-  // Removed commentDialog state
+  
   const [messageDialog, setMessageDialog] = useState<{
     open: boolean;
     proposalNo: string | null;
@@ -84,8 +84,9 @@ export default function Dashboard() {
     open: false,
     proposalNo: null
   });
+
   const [message, setMessage] = useState("");
-  // Removed comment and policyComments state
+  // Removed comment-related state
   const [policyStatuses, setPolicyStatuses] = useState<Record<string, "acknowledge" | "done" | "closed">>({});
   const handleSelectAll = (checked: boolean) => {
     if (checked) {
@@ -101,7 +102,7 @@ export default function Dashboard() {
       setSelectedRows(selectedRows.filter(id => id !== proposalNo));
     }
   };
-  // Removed handleCommentSubmit
+  
   const handleDone = () => {
     if (selectedRows.length === 0) return;
     const newStatuses = {
@@ -131,49 +132,7 @@ export default function Dashboard() {
   return <div className="space-y-6 animate-in">
       {/* Status Navigation Menu */}
       <div className="grid gap-6 md:grid-cols-3">
-        <Card className={`hover-lift cursor-pointer transition-all ${activeStatus === "acknowledge" ? "border-warning ring-2 ring-warning/20" : "hover:border-primary/50"}`} onClick={() => setActiveStatus("acknowledge")}>
-          <CardContent className="p-6">
-            <div className="flex items-center gap-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-warning">
-                <Clock className="h-6 w-6 text-white" />
-              </div>
-              <div className="space-y-1">
-                <p className="text-sm font-medium text-muted-foreground">Acknowledge</p>
-                <p className="text-3xl font-bold text-foreground">{getStatusCount("acknowledge")}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className={`hover-lift cursor-pointer transition-all ${activeStatus === "done" ? "border-success ring-2 ring-success/20" : "hover:border-success/50"}`} onClick={() => setActiveStatus("done")}>
-          <CardContent className="p-6">
-            <div className="flex items-center gap-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-success">
-                <CheckCircle className="h-6 w-6 text-white" />
-              </div>
-              <div className="space-y-1">
-                <p className="text-sm font-medium text-muted-foreground">In Progress
-
-              </p>
-                <p className="text-3xl font-bold text-foreground">{getStatusCount("done")}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className={`hover-lift cursor-pointer transition-all ${activeStatus === "closed" ? "border-destructive ring-2 ring-destructive/20" : "hover:border-destructive/50"}`} onClick={() => setActiveStatus("closed")}>
-          <CardContent className="p-6">
-            <div className="flex items-center gap-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-destructive">
-                <AlertCircle className="h-6 w-6 text-white" />
-              </div>
-              <div className="space-y-1">
-                <p className="text-sm font-medium text-muted-foreground">Completed</p>
-                <p className="text-3xl font-bold text-foreground">{getStatusCount("closed")}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        {/* ...existing code for status cards... */}
       </div>
 
       {/* Recent Policies Table */}
@@ -182,44 +141,6 @@ export default function Dashboard() {
           <CardTitle>
             {activeStatus === "acknowledge" ? "Acknowledge" : activeStatus === "done" ? "Done" : "Closed"} Policies
           </CardTitle>
-          <div className="flex gap-4 mt-4">
-            
-            
-            {dateFilter !== "custom" ? <Select value={dateFilter} onValueChange={setDateFilter}>
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Select date range" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="anytime">Anytime</SelectItem>
-                  <SelectItem value="today">Today</SelectItem>
-                  <SelectItem value="last7days">Last 7 days</SelectItem>
-                  <SelectItem value="last30days">Last 30 days</SelectItem>
-                  <SelectItem value="last6months">Last 6 months</SelectItem>
-                  <SelectItem value="custom">Custom Range</SelectItem>
-                </SelectContent>
-              </Select> : <Popover>
-                <PopoverTrigger asChild>
-                  <Button variant="outline" className={cn("w-[280px] justify-start text-left font-normal", !customDateRange?.from && "text-muted-foreground")}>
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {customDateRange?.from ? customDateRange?.to ? <>
-                          {format(customDateRange.from, "LLL dd, y")} -{" "}
-                          {format(customDateRange.to, "LLL dd, y")}
-                        </> : format(customDateRange.from, "LLL dd, y") : <span>Pick a date range</span>}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar mode="range" selected={customDateRange as any} onSelect={setCustomDateRange as any} numberOfMonths={2} className="pointer-events-auto" />
-                  <div className="p-3 border-t flex gap-2">
-                    <Button variant="outline" onClick={() => {
-                  setDateFilter("anytime");
-                  setCustomDateRange(undefined);
-                }} className="flex-1">
-                      Clear
-                    </Button>
-                  </div>
-                </PopoverContent>
-              </Popover>}
-          </div>
         </CardHeader>
         <CardContent>
           <Table>
@@ -227,17 +148,16 @@ export default function Dashboard() {
               <TableRow>
                 {activeStatus !== "closed" && (
                   <TableHead className="w-12">
-                    <Checkbox checked={isAllSelected} onCheckedChange={handleSelectAll} />
+                    
                   </TableHead>
                 )}
-                <TableHead>{mailboxFilter === "sent" ? "To" : ""}</TableHead>
+                <TableHead>{mailboxFilter === "sent" ? "To" : "Sender"}</TableHead>
                 <TableHead>Proposal No</TableHead>
                 <TableHead>Registration No</TableHead>
-                <TableHead>Assigned To</TableHead>
-                <TableHead>Workflow Status</TableHead>
+                <TableHead>Insured Person</TableHead>
+                <TableHead>Tracking Status</TableHead>
                 <TableHead>Duration</TableHead>
                 <TableHead>Request Date</TableHead>
-                {/* Removed Comment column header */}
                 <TableHead>Message</TableHead>
               </TableRow>
             </TableHeader>
@@ -245,13 +165,12 @@ export default function Dashboard() {
               {filteredPolicies.map(policy => <TableRow key={policy.proposalNo}>
                   {activeStatus !== "closed" && (
                     <TableCell className="w-12">
-                      <Checkbox checked={selectedRows.includes(policy.proposalNo)} onCheckedChange={checked => handleRowSelect(policy.proposalNo, checked as boolean)} />
                     </TableCell>
                   )}
-                  <TableCell className="font-medium">{}</TableCell>
+                  <TableCell className="font-medium">{policy.sender}</TableCell>
                   <TableCell>{policy.proposalNo}</TableCell>
                   <TableCell>{policy.registrationNo}</TableCell>
-                  <TableCell>{policy.AssignedTo}</TableCell>
+                  <TableCell>{policy.insuredPerson}</TableCell>
                   <TableCell>
                     <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20">
                       {policy.workflowStatus}
@@ -259,7 +178,7 @@ export default function Dashboard() {
                   </TableCell>
                   <TableCell className="text-muted-foreground">{policy.duration}</TableCell>
                   <TableCell className="text-muted-foreground">{policy.requestDate}</TableCell>
-                  {/* Removed Comment button cell */}
+
                   <TableCell>
                     <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setMessageDialog({
                   open: true,
@@ -274,14 +193,7 @@ export default function Dashboard() {
         </CardContent>
       </Card>
       
-      {activeStatus !== "closed" && (
-        <div className="flex justify-end gap-2">
-          {/* Reply button removed */}
-          <Button onClick={handleDone} disabled={selectedRows.length === 0}>
-            Submit ({selectedRows.length})
-          </Button>
-        </div>
-      )}
+      {/* Removed select box and Submit button as requested */}
       
       {/* Comment Dialog removed */}
       
@@ -312,8 +224,20 @@ export default function Dashboard() {
               <Label htmlFor="message">Message</Label>
               <Textarea id="message" placeholder="Enter your message here..." value={message} onChange={e => setMessage(e.target.value)} rows={5} />
             </div>
-            
-            
+            <div className="space-y-2">
+              <Label htmlFor="file-upload">Attach File</Label>
+              <div className="flex items-center gap-2">
+                <Input id="file-upload" type="file" className="flex-1" />
+                <Paperclip className="h-4 w-4 text-muted-foreground" />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="image-upload">Attach Image</Label>
+              <div className="flex items-center gap-2">
+                <Input id="image-upload" type="file" accept="image/*" className="flex-1" />
+                <FileText className="h-4 w-4 text-muted-foreground" />
+              </div>
+            </div>
           </div>
           <DialogFooter>
             <Button onClick={handleMessageSubmit}>Submit</Button>
