@@ -22,7 +22,7 @@ const recentPolicies = [{
   insuredPerson: " Sweety Home Industry Co., Ltd",
   workflowStatus: "Acknowledged",
   duration: "2 days",
-  requestDate: "2024-03-15"
+  requestDate: "2025-10-21"
 }, {
   sender: "Ko Kyaw Soe Khaing",
   proposalNo: "EFI-HO/CM/PO/00000615/9-2023",
@@ -30,7 +30,7 @@ const recentPolicies = [{
   insuredPerson: "U Bo Bo Zaw Chit Hlaing",
   workflowStatus: "In Progress",
   duration: "5 days",
-  requestDate: "2024-03-10"
+  requestDate: "2025-10-18"
 }, {
   sender: "Ko Thiha Soe",
   proposalNo: "EFI-HO/EV/C-PO/0000000002/9-2025",
@@ -38,7 +38,7 @@ const recentPolicies = [{
   insuredPerson: "U Wai Phyo Zaw",
   workflowStatus: "In Progress",
   duration: "3 days",
-  requestDate: "2024-03-05"
+  requestDate: "2025-10-21"
 }, {
   sender: "Ko Zaw Lwin Htoo",
   proposalNo: "EFI-HO/CM/C-PO/00000182/9-2023",
@@ -46,7 +46,7 @@ const recentPolicies = [{
   insuredPerson: "U Min Si Thu",
   workflowStatus: "Completed",
   duration: "1 day",
-  requestDate: "2024-02-28"
+  requestDate: "2025-10-21"
 }];
 const messages = [{
   id: 1,
@@ -139,7 +139,8 @@ export default function Dashboard() {
       <Card>
         <CardHeader>
           <CardTitle>
-            {activeStatus === "acknowledge" ? "Acknowledge" : activeStatus === "done" ? "Done" : "Closed"} Policies
+            To Do Tasks Record
+            {/* {activeStatus === "acknowledge" ? "Acknowledge" : activeStatus === "done" ? "Done" : "Closed"} Policies */}
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -224,7 +225,7 @@ export default function Dashboard() {
               <Label htmlFor="message">Message</Label>
               <Textarea id="message" placeholder="Enter your message here..." value={message} onChange={e => setMessage(e.target.value)} rows={5} />
             </div>
-            <div className="space-y-2">
+            {/* <div className="space-y-2">
               <Label htmlFor="file-upload">Attach File</Label>
               <div className="flex items-center gap-2">
                 <Input id="file-upload" type="file" className="flex-1" />
@@ -237,7 +238,7 @@ export default function Dashboard() {
                 <Input id="image-upload" type="file" accept="image/*" className="flex-1" />
                 <FileText className="h-4 w-4 text-muted-foreground" />
               </div>
-            </div>
+            </div> */}
           </div>
           <DialogFooter>
             <Button onClick={handleMessageSubmit}>Submit</Button>

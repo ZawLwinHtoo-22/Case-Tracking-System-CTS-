@@ -91,7 +91,7 @@ function MotorTracking() {
       {/* Proposals Table */}
       <Card>
         <CardHeader>
-          <CardTitle>Stuck Proposals</CardTitle>
+          <CardTitle>Pending Proposals</CardTitle>
         </CardHeader>
         <CardContent>
           <Table>

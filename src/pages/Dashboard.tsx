@@ -19,34 +19,34 @@ const recentPolicies = [{
   //InitiatedBy: "Ko Nyein Chan Lin",
   proposalNo: "POL-2024-001",
   registrationNo: "MH-01-AB-1234",
-  AssignedTo: "John Doe",
+  AssignedTo: "Kyaw Soe Khine",
   workflowStatus: "Survey",
   duration: "2 days",
-  requestDate: "2024-03-15"
+  requestDate: "2025-10-21"
 }, {
   //InitiatedBy: "Ko Nyein Chan Lin",
   proposalNo: "POL-2024-002",
   registrationNo: "MH-02-CD-5678",
-  AssignedTo: "Jane Smith",
+  AssignedTo: "Nyein Chan Lin",
   workflowStatus: "Approval",
   duration: "5 days",
-  requestDate: "2024-03-10"
+  requestDate: "2025-10-18"
 }, {
   //InitiatedBy: "Ko Nyein Chan Lin",
   proposalNo: "POL-2024-003",
   registrationNo: "MH-03-EF-9012",
-  AssignedTo: "ABC Corp",
+  AssignedTo: "Min Thein Htay",
   workflowStatus: "Payment",
   duration: "3 days",
-  requestDate: "2024-03-05"
+  requestDate: "2025-10-20"
 }, {
   //InitiatedBy: "Ko Nyein Chan Lin",
   proposalNo: "POL-2024-004",
   registrationNo: "MH-04-GH-3456",
-  AssignedTo: "Mike Johnson",
+  AssignedTo: "Kyaw Soe Khine",
   workflowStatus: "Inform",
   duration: "1 day",
-  requestDate: "2024-02-28"
+  requestDate: "2025-10-21"
 }];
 const messages = [{
   id: 1,
@@ -114,6 +114,17 @@ export default function Dashboard() {
     setPolicyStatuses(newStatuses);
     setSelectedRows([]);
   };
+
+  // Helper to set selected rows to a specific status
+  const setSelectedToStatus = (status: "acknowledge" | "done" | "closed") => {
+    if (selectedRows.length === 0) return;
+    const newStatuses = { ...policyStatuses };
+    selectedRows.forEach(p => {
+      newStatuses[p] = status;
+    });
+    setPolicyStatuses(newStatuses);
+    setSelectedRows([]);
+  };
   const getStatusCount = (status: "acknowledge" | "done" | "closed") => {
     const statusPolicies = recentPolicies.filter(p => (policyStatuses[p.proposalNo] || "acknowledge") === status);
     return status === "acknowledge" ? 124 + statusPolicies.length : status === "done" ? 1089 + statusPolicies.length : 35 + statusPolicies.length;
@@ -152,7 +163,7 @@ export default function Dashboard() {
                 <CheckCircle className="h-6 w-6 text-white" />
               </div>
               <div className="space-y-1">
-                <p className="text-sm font-medium text-muted-foreground">In Progress
+                <p className="text-sm font-medium text-muted-foreground">Pending
 
               </p>
                 <p className="text-3xl font-bold text-foreground">{getStatusCount("done")}</p>
@@ -180,7 +191,7 @@ export default function Dashboard() {
       <Card>
         <CardHeader>
           <CardTitle>
-            {activeStatus === "acknowledge" ? "Acknowledge" : activeStatus === "done" ? "Done" : "Closed"} Policies
+            {activeStatus === "acknowledge" ? "Acknowledge" : activeStatus === "done" ? "Pending" : "Completed"} Noti Record
           </CardTitle>
           <div className="flex gap-4 mt-4">
             
@@ -274,14 +285,27 @@ export default function Dashboard() {
         </CardContent>
       </Card>
       
-      {activeStatus !== "closed" && (
-        <div className="flex justify-end gap-2">
-          {/* Reply button removed */}
-          <Button onClick={handleDone} disabled={selectedRows.length === 0}>
-            Submit ({selectedRows.length})
-          </Button>
-        </div>
-      )}
+      <div className="flex justify-end gap-2">
+        {/* Conditional action buttons based on activeStatus */}
+        {activeStatus === "acknowledge" && (
+          <>
+            <Button variant="outline" disabled={selectedRows.length === 0} onClick={() => setSelectedToStatus("done")}>Pending ({selectedRows.length})</Button>
+            <Button variant="ghost" disabled={selectedRows.length === 0} onClick={() => setSelectedToStatus("closed")}>Completed ({selectedRows.length})</Button>
+          </>
+        )}
+        {activeStatus === "done" && (
+          <>
+            <Button variant="outline" disabled={selectedRows.length === 0} onClick={() => setSelectedToStatus("acknowledge")}>Acknowledge ({selectedRows.length})</Button>
+            <Button variant="ghost" disabled={selectedRows.length === 0} onClick={() => setSelectedToStatus("closed")}>Completed ({selectedRows.length})</Button>
+          </>
+        )}
+        {activeStatus === "closed" && (
+          <>
+            <Button variant="outline" disabled={selectedRows.length === 0} onClick={() => setSelectedToStatus("acknowledge")}>Acknowledge ({selectedRows.length})</Button>
+            <Button variant="ghost" disabled={selectedRows.length === 0} onClick={() => setSelectedToStatus("done")}>Pending ({selectedRows.length})</Button>
+          </>
+        )}
+      </div>
       
       {/* Comment Dialog removed */}
       

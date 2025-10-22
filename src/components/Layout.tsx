@@ -9,10 +9,11 @@ interface LayoutProps {
 }
 
 const navItems = [
-  { icon: Home, label: "Dashboard", path: "/Dashboard" },
-  { icon: TrendingUp, label: "Assigned Tasks", path: "/ReceiveNoti" },
   { icon: TrendingUp, label: "Tracking", path: "/tracking" },
-  { icon: Plus, label: "New Proposal", path: "/tracking/motor/new" },
+  { icon: Home, label: "Notification Process", path: "/Dashboard" },
+  { icon: TrendingUp, label: "To Do Tasks", path: "/ReceiveNoti" },
+  
+  //{ icon: Plus, label: "New Proposal", path: "/tracking/motor/new" },
   { icon: Settings, label: "Setup", path: "/setup" },
   { icon: User, label: "Profile", path: "/profile" },
 ];
@@ -81,9 +82,9 @@ export default function Layout({ children }: LayoutProps) {
           </h1>
           
           <div className="flex items-center gap-3">
-            <Button variant="ghost" size="icon" className="relative">
+            <Button variant="ghost" size="icon" className="relative bg-destructive/10 text-destructive">
               <Bell className="h-5 w-5" />
-              <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-destructive" />
+              <span className="absolute right-1 top-1 h-2 w-2 rounded-full bg-destructive ring-2 ring-card" />
             </Button>
           </div>
         </header>
