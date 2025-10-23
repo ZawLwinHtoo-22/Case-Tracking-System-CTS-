@@ -24,14 +24,15 @@ export default function Layout({ children }: LayoutProps) {
   return (
     <div className="flex min-h-screen w-full bg-background">
       {/* Sidebar */}
-      <aside className="fixed left-0 top-0 z-40 h-screen w-64 bg-sidebar">
+      <aside className="fixed left-0 top-0 z-40 h-screen w-64 bg-[#00907f]">
         <div className="flex h-full flex-col">
           {/* Logo */}
-          <div className="flex h-16 items-center gap-2 border-b border-sidebar-border px-6">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-sidebar-primary">
-              <TrendingUp className="h-5 w-5 text-sidebar-primary-foreground" />
+          <div className="flex h-16 items-center gap-3 border-b border-sidebar-border px-6">
+            {/* logo inside white bordered box */}
+            <div className="flex h-10 w-10 items-center justify-center rounded-md bg-white border border-white/30 p-1 shadow-sm">
+              <img src="/efi1.png" alt="EFI logo" className="h-8 w-auto" />
             </div>
-            <span className="text-lg font-semibold text-sidebar-foreground">WorkFlow Tracking System</span>
+            <span className="ml-2 text-lg font-semibold text-white">Case Tracking System</span>
           </div>
 
           {/* Navigation */}
@@ -45,13 +46,13 @@ export default function Layout({ children }: LayoutProps) {
                   key={item.path}
                   to={item.path}
                   className={cn(
-                    "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all",
+                    "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-semibold transition-all",
                     isActive
-                      ? "bg-sidebar-accent text-sidebar-accent-foreground"
-                      : "text-sidebar-foreground/80 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"
+                      ? "bg-white/10 text-white"
+                      : "text-white hover:bg-white/10 hover:text-white"
                   )}
                 >
-                  <Icon className="h-5 w-5" />
+                  <Icon className={cn("h-5 w-5", isActive ? "text-white" : "text-white/90")} />
                   {item.label}
                 </Link>
               );
@@ -78,7 +79,7 @@ export default function Layout({ children }: LayoutProps) {
         {/* Header */}
         <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-border bg-card px-6">
           <h1 className="text-xl font-semibold text-foreground">
-            {navItems.find((item) => item.path === location.pathname)?.label || "Dashboard"}
+            {navItems.find((item) => item.path === location.pathname)?.label || ""}
           </h1>
           
           <div className="flex items-center gap-3">

@@ -27,7 +27,9 @@ export default function Login() {
     <div className="flex min-h-screen items-center justify-center bg-muted">
       <Card className="w-full max-w-md shadow-lg">
         <CardHeader>
-          <CardTitle className="text-center">Login</CardTitle>
+          <CardTitle className="text-center">
+            <img src="/efi.png" alt="EFI logo" className="mx-auto h-32 w-auto" />
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
