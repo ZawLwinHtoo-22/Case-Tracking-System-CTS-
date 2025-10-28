@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, Send } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -14,6 +14,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "sonner";
+import { getCategories } from "@/lib/categories";
 
 const users = [
   { id: "kyaw", name: "Ko Kyaw Soe Khaing" },
@@ -45,13 +46,7 @@ const salesTeamUsers = [
   { id: "DawOhnmarSwe", name: "Daw Ohnmar Swe" },
 ];
 
-const categories = [
-  "Urgent Follow-up",
-  "Document Required",
-  "Approval Pending",
-  "Survey Scheduled",
-  "Payment Required",
-];
+
 
 export default function Notification() {
   const navigate = useNavigate();
@@ -60,6 +55,11 @@ export default function Notification() {
   const [selectedRecipients, setSelectedRecipients] = useState<string[]>([]);
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
+  const [categories, setCategories] = useState<string[]>([]);
+
+  useEffect(() => {
+    setCategories(getCategories());
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -135,22 +135,20 @@ export default function Notification() {
                     <div className="space-y-2">
                       {surveyTeamUsers.map((user) => (
                         <div key={user.id} className="flex items-center space-x-2">
-                          <Checkbox
-                            id={user.id}
-                            checked={selectedRecipients.includes(user.id)}
-                            onCheckedChange={(checked) => {
-                              if (checked) {
-                                // Remove all users from this team, then add the new one
-                                const teamUserIds = surveyTeamUsers.map(u => u.id);
-                                setSelectedRecipients([
-                                  ...selectedRecipients.filter(id => !teamUserIds.includes(id)),
-                                  user.id
-                                ]);
-                              } else {
-                                setSelectedRecipients(selectedRecipients.filter(id => id !== user.id));
-                              }
-                            }}
-                          />
+                              <Checkbox
+                                id={user.id}
+                                checked={selectedRecipients.includes(user.id)}
+                                onCheckedChange={(checked) => {
+                                  if (checked) {
+                                    // Allow multiple survey team members to be selected
+                                    if (!selectedRecipients.includes(user.id)) {
+                                      setSelectedRecipients([...selectedRecipients, user.id]);
+                                    }
+                                  } else {
+                                    setSelectedRecipients(selectedRecipients.filter(id => id !== user.id));
+                                  }
+                                }}
+                              />
                           <Label htmlFor={user.id} className="text-sm font-normal cursor-pointer">
                             {user.name}
                           </Label>
@@ -170,11 +168,10 @@ export default function Notification() {
                             checked={selectedRecipients.includes(user.id)}
                             onCheckedChange={(checked) => {
                               if (checked) {
-                                const teamUserIds = approvalTeamUsers.map(u => u.id);
-                                setSelectedRecipients([
-                                  ...selectedRecipients.filter(id => !teamUserIds.includes(id)),
-                                  user.id
-                                ]);
+                                // Allow multiple approval team members to be selected
+                                if (!selectedRecipients.includes(user.id)) {
+                                  setSelectedRecipients([...selectedRecipients, user.id]);
+                                }
                               } else {
                                 setSelectedRecipients(selectedRecipients.filter(id => id !== user.id));
                               }
@@ -199,11 +196,10 @@ export default function Notification() {
                             checked={selectedRecipients.includes(user.id)}
                             onCheckedChange={(checked) => {
                               if (checked) {
-                                const teamUserIds = financeTeamUsers.map(u => u.id);
-                                setSelectedRecipients([
-                                  ...selectedRecipients.filter(id => !teamUserIds.includes(id)),
-                                  user.id
-                                ]);
+                                // Allow multiple finance team members to be selected
+                                if (!selectedRecipients.includes(user.id)) {
+                                  setSelectedRecipients([...selectedRecipients, user.id]);
+                                }
                               } else {
                                 setSelectedRecipients(selectedRecipients.filter(id => id !== user.id));
                               }
@@ -228,11 +224,10 @@ export default function Notification() {
                             checked={selectedRecipients.includes(user.id)}
                             onCheckedChange={(checked) => {
                               if (checked) {
-                                const teamUserIds = salesTeamUsers.map(u => u.id);
-                                setSelectedRecipients([
-                                  ...selectedRecipients.filter(id => !teamUserIds.includes(id)),
-                                  user.id
-                                ]);
+                                // Allow multiple sales team members to be selected
+                                if (!selectedRecipients.includes(user.id)) {
+                                  setSelectedRecipients([...selectedRecipients, user.id]);
+                                }
                               } else {
                                 setSelectedRecipients(selectedRecipients.filter(id => id !== user.id));
                               }

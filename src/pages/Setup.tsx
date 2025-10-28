@@ -46,6 +46,12 @@ const setupItems = [
     description: "Manage Agent Mapping with organization user and their hierarchy",
    color: "bg-primary"
   },
+  {
+    icon: Menu,
+    title: "Category Setup",
+    description: "Manage notification categories used across the app",
+    color: "bg-accent"
+  },
 ];
 
 export default function Setup() {
@@ -97,7 +103,7 @@ export default function Setup() {
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
         {setupItems.map((item) => {
           const Icon = item.icon;
-          const to = item.title === 'Organizations' ? '/setup/organizations' : item.title === 'Departments' ? '/setup/departments' : item.title === 'Users' ? '/setup/users' : '#';
+          const to = item.title === 'Organizations' ? '/setup/organizations' : item.title === 'Departments' ? '/setup/departments' : item.title === 'Users' ? '/setup/users' : item.title === 'Category Setup' ? '/setup/categories' : '#';
           return (
             <Link key={item.title} to={to} className="block">
               <Card className="hover-lift cursor-pointer">
