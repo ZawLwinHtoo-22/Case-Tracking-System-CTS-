@@ -11,6 +11,7 @@ import ReceiveNoti from "./pages/ReceiveNoti";
 import Setup from "./pages/Setup";
 import OrganizationSetup from "./pages/OrganizationSetup";
 import CategorySetup from "./pages/CategorySetup";
+import AgentMappingSetup from "./pages/AgentMappingSetup";
 import Profile from "./pages/Profile";
 import NewProposal from "./pages/NewProposal";
 import Notification from "./pages/Notification";
@@ -38,6 +39,7 @@ const App = () => (
           <Route path="/setup" element={<Layout><Setup /></Layout>} />
           <Route path="/setup/organizations" element={<Layout><OrganizationSetup /></Layout>} />
           <Route path="/setup/categories" element={<Layout><CategorySetup /></Layout>} />
+          <Route path="/setup/agent-mapping" element={<Layout><AgentMappingSetup /></Layout>} />
           <Route path="/setup/departments" element={<Layout><DepartmentSetup /></Layout>} />
           <Route path="/setup/users" element={<Layout><UserSetup /></Layout>} />
           <Route path="/profile" element={<Layout><Profile /></Layout>} />

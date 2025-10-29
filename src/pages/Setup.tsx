@@ -101,9 +101,9 @@ export default function Setup() {
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-        {setupItems.map((item) => {
+          {setupItems.map((item) => {
           const Icon = item.icon;
-          const to = item.title === 'Organizations' ? '/setup/organizations' : item.title === 'Departments' ? '/setup/departments' : item.title === 'Users' ? '/setup/users' : item.title === 'Category Setup' ? '/setup/categories' : '#';
+          const to = item.title === 'Organizations' ? '/setup/organizations' : item.title === 'Departments' ? '/setup/departments' : item.title === 'Users' ? '/setup/users' : item.title === 'Category Setup' ? '/setup/categories' : item.title === 'Agents Mapping' ? '/setup/agent-mapping' : '#';
           return (
             <Link key={item.title} to={to} className="block">
               <Card className="hover-lift cursor-pointer">
