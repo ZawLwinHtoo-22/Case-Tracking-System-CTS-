@@ -1,6 +1,9 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { useLocation, Link } from "react-router-dom";
 import { Home, TrendingUp, Settings, User, Bell, Plus } from "lucide-react";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { getNotifications, NotificationItem } from "@/lib/notifications";
+import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
@@ -21,6 +24,47 @@ const navItems = [
 export default function Layout({ children }: LayoutProps) {
   const location = useLocation();
 
+
+
+function NotificationList() {
+  const [notifications, setNotifications] = useState<NotificationItem[]>([]);
+
+  useEffect(() => {
+    try {
+      const list = getNotifications();
+      setNotifications(list);
+    } catch (e) {
+      setNotifications([]);
+    }
+  }, []);
+
+  if (notifications.length === 0) {
+    return <div className="text-sm text-muted-foreground">No notifications</div>;
+  }
+
+  return (
+    <div className="space-y-2 max-h-80 overflow-auto">
+      {notifications.map((n) => (
+        <Link
+          key={n.notificationNo}
+          to={n.proposalNo ? `/tracking` : `#`}
+          className="flex items-start gap-3 p-2 rounded-md hover:bg-muted"
+        >
+          <div className="flex-1">
+            <div className="text-sm font-medium">{n.sender ?? "Unknown"}</div>
+            {n.description && <div className="text-xs text-muted-foreground">{n.description}</div>}
+          </div>
+          <div className="text-xs text-muted-foreground whitespace-nowrap">{n.createdAt ? format(new Date(n.createdAt), "dd/MM HH:mm") : ""}</div>
+        </Link>
+      ))}
+      <div className="pt-2">
+        <Link to="/ReceiveNoti" className="text-sm text-primary">
+          View all
+        </Link>
+      </div>
+    </div>
+  );
+}
   return (
     <div className="flex min-h-screen w-full bg-background">
       {/* Sidebar */}
@@ -83,10 +127,17 @@ export default function Layout({ children }: LayoutProps) {
           </h1>
           
           <div className="flex items-center gap-3">
-            <Button variant="ghost" size="icon" className="relative bg-destructive/10 text-destructive">
-              <Bell className="h-5 w-5" />
-              <span className="absolute right-1 top-1 h-2 w-2 rounded-full bg-destructive ring-2 ring-card" />
-            </Button>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="ghost" size="icon" className="relative bg-destructive/10 text-destructive">
+                  <Bell className="h-5 w-5" />
+                  <span className="absolute right-1 top-1 h-2 w-2 rounded-full bg-destructive ring-2 ring-card" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent>
+                <NotificationList />
+              </PopoverContent>
+            </Popover>
           </div>
         </header>
 
