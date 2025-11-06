@@ -15,6 +15,8 @@ import {
 } from "@/components/ui/select";
 import { toast } from "sonner";
 import { getCategories } from "@/lib/categories";
+import { format } from "date-fns";
+import { addNotification } from "@/lib/notifications";
 
 const users = [
   { id: "kyaw", name: "Ko Kyaw Soe Khaing" },
@@ -67,7 +69,20 @@ export default function Notification() {
       toast.error("Please select at least one recipient");
       return;
     }
-    toast.success("Notification sent successfully!");
+    // generate notification key using datetime format
+    const now = new Date();
+    // Format: YYYYMMDD-HHmmss (e.g., 20251106-143512)
+    const key = format(now, "yyyyMMdd-HHmmss");
+    const notification = {
+      notificationNo: key,
+      proposalNo: proposalId ?? null,
+      sender: "You",
+      category,
+      description,
+      createdAt: now.toISOString(),
+    };
+    addNotification(notification as any);
+    toast.success("Notification sent successfully! Notification No: " + key);
     navigate("/tracking");
   };
 

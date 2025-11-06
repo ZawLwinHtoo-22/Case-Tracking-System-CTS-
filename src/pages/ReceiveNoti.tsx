@@ -15,6 +15,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
+import { findNotificationByProposal } from "@/lib/notifications";
 const recentPolicies = [{
   sender: "Ko Nyein Chan Lin",
   proposalNo: "EFI-HO/CM/PO/00001694/9-2025",
@@ -152,6 +153,7 @@ export default function Dashboard() {
                     
                   </TableHead>
                 )}
+                <TableHead className="w-[200px]">Notification No</TableHead>
                 <TableHead>{mailboxFilter === "sent" ? "To" : "Sender"}</TableHead>
                 <TableHead>Proposal No</TableHead>
                 <TableHead>Registration No</TableHead>
@@ -168,9 +170,10 @@ export default function Dashboard() {
                     <TableCell className="w-12">
                     </TableCell>
                   )}
+                  <TableCell className="w-[200px] font-medium">{findNotificationByProposal(policy.proposalNo)?.notificationNo ?? '20251106-123456'}</TableCell>
                   <TableCell className="font-medium">{policy.sender}</TableCell>
-                  <TableCell>{policy.proposalNo}</TableCell>
-                  <TableCell>{policy.registrationNo}</TableCell>
+                  <TableCell className="whitespace-nowrap">{(policy.proposalNo ?? "").toUpperCase()}</TableCell>
+                  <TableCell className="whitespace-nowrap">{(policy.registrationNo ?? "").toUpperCase()}</TableCell>
                   <TableCell>{policy.insuredPerson}</TableCell>
                   <TableCell>
                     <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20">

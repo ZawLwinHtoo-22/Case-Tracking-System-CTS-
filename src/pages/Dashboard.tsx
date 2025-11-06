@@ -15,6 +15,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
+import { findNotificationByProposal } from "@/lib/notifications";
 const recentPolicies = [{
   //InitiatedBy: "Ko Nyein Chan Lin",
   proposalNo: "POL-2024-001",
@@ -241,7 +242,7 @@ export default function Dashboard() {
                     <Checkbox checked={isAllSelected} onCheckedChange={handleSelectAll} />
                   </TableHead>
                 )}
-                <TableHead>{mailboxFilter === "sent" ? "To" : ""}</TableHead>
+                <TableHead className="w-[200px]">Notification No</TableHead>
                 <TableHead>Proposal No</TableHead>
                 <TableHead>Registration No</TableHead>
                 <TableHead>Assigned To</TableHead>
@@ -259,7 +260,7 @@ export default function Dashboard() {
                       <Checkbox checked={selectedRows.includes(policy.proposalNo)} onCheckedChange={checked => handleRowSelect(policy.proposalNo, checked as boolean)} />
                     </TableCell>
                   )}
-                  <TableCell className="font-medium">{}</TableCell>
+                  <TableCell className="w-[200px] font-medium">{findNotificationByProposal(policy.proposalNo)?.notificationNo ?? '20251106-123456'}</TableCell>
                   <TableCell>{policy.proposalNo}</TableCell>
                   <TableCell>{policy.registrationNo}</TableCell>
                   <TableCell>{policy.AssignedTo}</TableCell>
