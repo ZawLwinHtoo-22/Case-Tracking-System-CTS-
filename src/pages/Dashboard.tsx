@@ -22,7 +22,7 @@ const recentPolicies = [{
   AssignedTo: "Kyaw Soe Khine",
   workflowStatus: "Survey",
   duration: "2 days",
-  requestDate: "2025-10-21"
+  requestDate: "2025-10-26"
 }, {
   //InitiatedBy: "Ko Nyein Chan Lin",
   proposalNo: "POL-2024-002",
@@ -30,7 +30,7 @@ const recentPolicies = [{
   AssignedTo: "Nyein Chan Lin",
   workflowStatus: "Approval",
   duration: "5 days",
-  requestDate: "2025-10-18"
+  requestDate: "2025-10-23"
 }, {
   //InitiatedBy: "Ko Nyein Chan Lin",
   proposalNo: "POL-2024-003",
@@ -38,7 +38,7 @@ const recentPolicies = [{
   AssignedTo: "Min Thein Htay",
   workflowStatus: "Payment",
   duration: "3 days",
-  requestDate: "2025-10-20"
+  requestDate: "2025-10-25"
 }, {
   //InitiatedBy: "Ko Nyein Chan Lin",
   proposalNo: "POL-2024-004",
@@ -46,7 +46,7 @@ const recentPolicies = [{
   AssignedTo: "Kyaw Soe Khine",
   workflowStatus: "Inform",
   duration: "1 day",
-  requestDate: "2025-10-21"
+  requestDate: "2025-10-27"
 }];
 const messages = [{
   id: 1,

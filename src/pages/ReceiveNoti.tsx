@@ -22,7 +22,7 @@ const recentPolicies = [{
   insuredPerson: " Sweety Home Industry Co., Ltd",
   workflowStatus: "Acknowledged",
   duration: "2 days",
-  requestDate: "2025-10-21"
+  requestDate: "2025-10-26"
 }, {
   sender: "Ko Kyaw Soe Khaing",
   proposalNo: "EFI-HO/CM/PO/00000615/9-2023",
@@ -30,23 +30,23 @@ const recentPolicies = [{
   insuredPerson: "U Bo Bo Zaw Chit Hlaing",
   workflowStatus: "In Progress",
   duration: "5 days",
-  requestDate: "2025-10-18"
+  requestDate: "2025-10-23"
 }, {
-  sender: "Ko Thiha Soe",
+  sender: "Ko Kyaw Ko Ko",
   proposalNo: "EFI-HO/EV/C-PO/0000000002/9-2025",
   registrationNo: "NPW 9S/9296",
   insuredPerson: "U Wai Phyo Zaw",
   workflowStatus: "In Progress",
   duration: "3 days",
-  requestDate: "2025-10-21"
+  requestDate: "2025-10-25"
 }, {
-  sender: "Ko Zaw Lwin Htoo",
+  sender: "Ma Ngway Nyi Nyi",
   proposalNo: "EFI-HO/CM/C-PO/00000182/9-2023",
   registrationNo: "BGO 5R/1709",
   insuredPerson: "U Min Si Thu",
   workflowStatus: "Completed",
   duration: "1 day",
-  requestDate: "2025-10-21"
+  requestDate: "2025-10-27"
 }];
 const messages = [{
   id: 1,
